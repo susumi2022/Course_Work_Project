@@ -18,22 +18,33 @@ public class MainClass {
 
             int menuId = mainMenu.getMainMenus();
 
+//            if (menuId == 1) {
+//                booking.setBookingsDetails();
+//            } else if (menuId == 2){
+//                booking.updateBookingsDetails();
+//            } else if (menuId == 3){
+//                booking.cancelBookingsDetails();
+//            }
+//
             if (menuId == 1){
-                running = timeTable.ViewTimetableMenu(menuId);
+                running =  timeTable.ViewTimetableMenu(menuId);
 
                 System.out.println("Do you want to go back ? (Y/N)");
-                String a = reader.nextLine();
-                if(a.equals("Y")){
-                    System.out.println(a);
+                if((reader.nextLine()).toUpperCase().equals("Y")){
                     menuId = mainMenu.getMainMenus();
-                } else if (a.equals("N")) {
-                    System.out.println("Please enter the booking details correctly....");
-                    System.out.println("Date : (DD/MM)");
-                    System.out.println("Fitness type : (S-SPAIN / Y-YOGA / Z-ZUMBA / B-BODY SCULPT)");
-                    System.out.println("Lesson time : ");
+                } else if ((reader.nextLine()).toUpperCase().equals("N")) {
+                    booking.setBookingsDetails();
                 }
-
-
+            } else  if (menuId == 2){
+                cancelBooking.cancelBooing();
+            } else  if (menuId == 3){
+                cancelBooking.cancelBooing();
+            } else  if (menuId == 4){
+                cancelBooking.cancelBooing();
+            } else  if (menuId == 5){
+                cancelBooking.cancelBooing();
+            } else {
+                System.out.println("Invalid menu.");
             }
 
         }
