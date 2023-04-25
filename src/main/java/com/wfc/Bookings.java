@@ -10,10 +10,12 @@ public class Bookings {
     private File zumba_FileBooking = new File("src/Zumba_BookingDetails.txt");
     private File bodySculpt_FileBooking = new File("src/BodySculpt_BookingDetails.txt");
     private File fileBooking = null;
+    private String bookingNo  = "";
     public String Bookings(String bookingID,String name, String weekNo, String day,String type,String price){
         return bookingID + "," + name.toUpperCase() + "," + weekNo + "," + day.toUpperCase() + "," + type +","+price;
     }
 
+    //Set Booking sDetails
     public void setBookingsDetails() {
 
         System.out.println("Please enter the booking details correctly....");
@@ -53,16 +55,17 @@ public class Bookings {
 
             if(reader.nextLine().toUpperCase().equals("Y")){
 
-                //System.out.println("Booking number : " + date);
                 System.out.println("Name : " + name);
                 System.out.println("Booking week : " + week);
                 System.out.println("Booking day : " + day);
                 System.out.println("Fitness type : " + getFitnessType(f_Type));
 
-                boolean status = saveBookingsDetails(Bookings(generateBookingNumber(f_Type),name,"WEEK"+week,day,getFitnessType(f_Type),price),f_Type);
+                bookingNo = generateBookingNumber(f_Type);
+
+                boolean status = saveBookingsDetails(Bookings(bookingNo,name,"WEEK"+week,day,getFitnessType(f_Type),price),f_Type);
 
                 if (status){
-                    System.out.println("Your booking completed successfully.\n");
+                    System.out.println("Your booking completed successfully. Booking No : "+ bookingNo + "\n");
                     MainMenu m = new MainMenu();
                     m.getMainMenus();
                 }
@@ -76,9 +79,9 @@ public class Bookings {
                 m.getMainMenus();
             }
         }
-
-
     }
+
+    // Get Fitness Type
     public String getFitnessType(String f_Type){
         String selectedType = "";
         switch (f_Type.toUpperCase()){
@@ -98,6 +101,8 @@ public class Bookings {
 
         return  selectedType;
     }
+
+    // Generate Booking Number
     public String generateBookingNumber(String f_Type){
 
         int bookingId = 0;
@@ -135,6 +140,8 @@ public class Bookings {
 
         return booking_Prefix + bookingId;
     }
+
+    // Save Bookings Details
     public boolean saveBookingsDetails(String details,String f_Type) {
         try {
             if (f_Type.toUpperCase().equals("S")) {
@@ -173,6 +180,8 @@ public class Bookings {
             return false;
         }
     }
+
+    // Change Bookings Details
     public void updateBookingsDetails() {
         System.out.println("Please enter your booking number");
         String bookingNo = reader.nextLine();
@@ -247,6 +256,8 @@ public class Bookings {
             }
         }
     }
+
+    // Cancel Bookings Details
     public void cancelBookingsDetails() {
         System.out.println("Do you want to cancel your booking (Y/N)");
         if(reader.nextLine().toUpperCase().equals("Y")) {
@@ -310,6 +321,8 @@ public class Bookings {
         }
 
     }
+
+    // attend Lesson
     public void attendLesson() {
         System.out.println("Please enter your booking number");
         String bookingNo = reader.nextLine();
@@ -369,6 +382,8 @@ public class Bookings {
         m.getMainMenus();
 
     }
+
+    // Validate booking details
     public boolean validateInputs(String f_Type,String day,String week){
 
         if(!"S".equals(f_Type.toUpperCase())  && !"Y".equals(f_Type.toUpperCase()) &&
@@ -385,6 +400,8 @@ public class Bookings {
             return validateDate(day,f_Type);
         }
     }
+
+    // Validate date
     public boolean validateDate(String inputDate,String type) {
         boolean valid = true;
         switch (inputDate.toUpperCase()) {
@@ -403,6 +420,8 @@ public class Bookings {
         }
         return  valid;
     }
+
+    // Validate total customer Count
     public boolean validateBookingDetails(File fileBooking){
         int lines = 0;
         try{
@@ -426,6 +445,8 @@ public class Bookings {
         }
         return true;
     }
+
+    // Validate repeat bookings
     public boolean validateCustomer(String name,String f_Type,String day,String week){
         if (f_Type.toUpperCase().equals("S")) {
             fileBooking = spain_FileBooking;
@@ -459,7 +480,4 @@ public class Bookings {
 
         return true;
     }
-
-
-
 }
